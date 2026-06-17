@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { profile, themes, skills, education } from '@/lib/data'
+import { profile, themes, skills } from '@/lib/data'
 
 export const metadata = {
   title: 'About',
@@ -73,12 +73,21 @@ export default function About() {
               priority
             />
           </div>
-          <div>
-            <p className="label-mono mb-3">Education</p>
-            <p className="text-sm font-medium text-text">
-              {education.qualification}
+          <blockquote className="border-l-2 border-accent/60 pl-4">
+            <p className="text-sm italic leading-relaxed text-text/90">
+              &ldquo;The expert in anything was once a beginner.&rdquo;
             </p>
-            <p className="text-sm text-muted">{education.institution}</p>
+            <p className="mt-2 font-mono text-[11px] uppercase tracking-[0.18em] text-muted">
+              &mdash; Helen Hayes
+            </p>
+          </blockquote>
+          <div>
+            <p className="label-mono mb-3">Currently</p>
+            <ul className="space-y-1.5 text-sm text-muted">
+              <li>&middot; Learning Rust</li>
+              <li>&middot; Building agentic workflows</li>
+              <li>&middot; Writing on the open web</li>
+            </ul>
           </div>
         </aside>
       </div>

@@ -120,8 +120,3 @@ export const credentials = {
     { name: '13-year site-wide infrastructure ownership', detail: 'Webhelp Kilmarnock · 2009 — 2022' },
   ],
 }
-
-export const education = {
-  qualification: 'HND in Software Engineering',
-  institution: 'Ayr College',
-}
