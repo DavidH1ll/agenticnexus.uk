@@ -1,9 +1,19 @@
 import Link from 'next/link'
 import { profile } from '@/lib/data'
-import { getAllWork } from '@/lib/content'
+import { getAllWork, getAllBlog } from '@/lib/content'
+
+function formatDate(value) {
+  if (!value) return ''
+  return new Date(value).toLocaleDateString('en-GB', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  })
+}
 
 export default function Home() {
   const work = getAllWork().slice(0, 3)
+  const posts = getAllBlog().slice(0, 2)
 
   return (
     <>
@@ -85,6 +95,44 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {posts.length > 0 && (
+        <section className="border-t border-border/60">
+          <div className="mx-auto max-w-page px-6 py-16 sm:px-8 sm:py-20">
+            <div className="flex items-end justify-between gap-6 pb-10">
+              <h2 className="text-display-md font-semibold text-text">
+                From the blog
+              </h2>
+              <Link
+                href="/blog"
+                className="hidden text-sm text-muted transition-colors hover:text-text sm:inline"
+              >
+                All posts &rarr;
+              </Link>
+            </div>
+            <ul className="grid gap-4 sm:grid-cols-2">
+              {posts.map((post) => (
+                <li key={post.slug}>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="card group flex flex-col"
+                  >
+                    <p className="label-mono mb-3">{formatDate(post.date)}</p>
+                    <h3 className="mb-2 text-lg font-semibold text-text transition-colors group-hover:text-accent-soft">
+                      {post.title}
+                    </h3>
+                    {post.summary && (
+                      <p className="text-sm leading-relaxed text-muted">
+                        {post.summary}
+                      </p>
+                    )}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
     </>
   )
 }

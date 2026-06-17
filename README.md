@@ -38,9 +38,10 @@ npx serve out
 
 ```
 src/
-  app/                # routes — /, /about, /work, /work/[slug], /credentials, /contact
+  app/                # routes — /, /about, /work, /work/[slug], /blog, /blog/[slug], /credentials, /contact
   components/         # Nav, Footer, ContactForm, MdxComponents
   content/work/       # MDX case studies
+  content/blog/       # MDX blog posts
   lib/                # content loader + structured data (experience, skills, credentials)
   styles/             # global CSS (tokens, prose styles, utilities)
 public/               # static assets
@@ -74,6 +75,22 @@ link: "https://github.com/you/repo"
 ```
 
 It will appear on `/work` and at `/work/<slug>` automatically.
+
+### Adding a blog post
+
+Create a new `.mdx` file in `src/content/blog/`:
+
+```mdx
+---
+title: "Post title"
+date: "2026-06-17"
+summary: "One-sentence pitch shown on the index and in the post header."
+---
+
+Body in markdown / MDX.
+```
+
+Posts are sorted by date (descending) and appear on `/blog` and at `/blog/<slug>`. The two most recent also appear in the "From the blog" section on the home page.
 
 ### Editing experience, skills, credentials
 
