@@ -50,14 +50,6 @@ export default function Footer() {
             <FaBluesky aria-hidden className="h-4 w-4" />
             <span>Bluesky</span>
           </a>
-          <a
-            href="https://pinemartinpost.uk/"
-            target="_blank"
-            rel="noreferrer"
-            className="text-muted transition-colors hover:text-text"
-          >
-            pinemartinpost.uk
-          </a>
         </div>
       </div>
     </footer>

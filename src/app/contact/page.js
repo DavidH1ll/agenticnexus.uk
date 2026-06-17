@@ -73,16 +73,6 @@ export default function Contact() {
                   <span>bsky.app/profile/agenticnexus.uk</span>
                 </a>
               </li>
-              <li>
-                <a
-                  href="https://pinemartinpost.uk/"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="text-muted transition-colors hover:text-text"
-                >
-                  pinemartinpost.uk
-                </a>
-              </li>
             </ul>
           </div>
           <div>

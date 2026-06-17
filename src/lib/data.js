@@ -8,7 +8,6 @@ export const profile = {
     { label: 'GitHub', href: 'https://github.com/DavidH1ll' },
     { label: 'LinkedIn', href: 'https://www.linkedin.com/in/davidh1ll' },
     { label: 'Bluesky', href: 'https://bsky.app/profile/agenticnexus.uk' },
-    { label: 'pinemartinpost.uk', href: 'https://pinemartinpost.uk/' },
   ],
 }
 
@@ -62,7 +61,7 @@ export const themes = [
   },
   {
     title: 'Open Web',
-    body: 'Interested in autonomy, self-hosting, and the political forces shaping the digital stack. Writing on pinemartinpost.uk.',
+    body: 'Interested in autonomy, self-hosting, and the political forces shaping the digital stack.',
   },
 ]
 
