@@ -23,10 +23,7 @@ export default function Home() {
           className="grid-bg grid-bg-mask pointer-events-none absolute inset-0 -z-10"
         />
         <div className="mx-auto max-w-page px-6 pb-24 pt-20 sm:px-8 sm:pt-28 lg:pt-36">
-          <p className="label-mono mb-8">
-            <span className="mr-2 inline-block h-1.5 w-1.5 rounded-full bg-accent align-middle" />
-            Ayr, Scotland &middot; available for new work
-          </p>
+          <p className="label-mono mb-8">Ayr, Scotland</p>
           <h1 className="max-w-4xl text-display-xl font-semibold text-text">
             {profile.name}.
           </h1>
