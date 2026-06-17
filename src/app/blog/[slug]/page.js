@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXRemote } from 'next-mdx-remote/rsc'
+import remarkGfm from 'remark-gfm'
 import { getAllBlogSlugs, getBlogBySlug } from '@/lib/content'
 import { components } from '@/components/MdxComponents'
 
@@ -51,7 +52,11 @@ export default function BlogPost({ params }) {
       </header>
 
       <div className="prose-mdx mt-12 max-w-prose">
-        <MDXRemote source={content} components={components} />
+        <MDXRemote
+          source={content}
+          components={components}
+          options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}
+        />
       </div>
     </article>
   )

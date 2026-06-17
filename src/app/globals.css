@@ -89,6 +89,28 @@ a {
   .prose-mdx ol {
     @apply my-5 list-decimal space-y-2 pl-6 text-text/90;
   }
+  .prose-mdx table {
+    @apply my-8 w-full border-collapse text-sm;
+  }
+  .prose-mdx thead {
+    @apply border-b border-border;
+  }
+  .prose-mdx th {
+    @apply py-2.5 px-3 text-left font-mono text-[11px] uppercase tracking-[0.18em] text-muted font-normal;
+  }
+  .prose-mdx tbody tr {
+    @apply border-b border-border/40;
+  }
+  .prose-mdx tbody tr:last-child {
+    @apply border-b-0;
+  }
+  .prose-mdx td {
+    @apply py-3 px-3 align-top text-text/90;
+  }
+  .prose-mdx th + th,
+  .prose-mdx td + td {
+    @apply border-l border-border/40;
+  }
   .prose-mdx strong {
     @apply font-semibold text-text;
   }
