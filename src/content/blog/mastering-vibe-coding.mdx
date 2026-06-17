@@ -1,0 +1,56 @@
+---
+title: "Mastering \"Vibe coding\""
+date: "2026-05-23"
+summary: "An operator's playbook for shipping production-grade software by steering AI agents — and the four habits that separate master vibe coders from casual ones."
+---
+
+I have recently made some significant leaps in my ability to "Vibe Code." Mastering this new way of programming is key to getting the best quality software in the shortest possible time.
+
+Coined to describe building software by steering AI agents using natural language and "vibes" rather than typing out every single line of syntax, it has sparked massive debate. To some, it represents the absolute future of rapid development. To others, it looks like a fast-track to technical debt, silent regressions, and unmaintainable codebases.
+
+But here is the hard reality: **Vibe Coding is a genuine engineering discipline.**
+
+However, there is a massive gulf between a casual vibe coder and a Master Operator. Casual operators get trapped in infinite error loops, while master operators ship production-grade architectures in hours instead of weeks.
+
+True mastery doesn't mean abandoning traditional software principles; it means elevating them. Here is the operational playbook to turn this paradigm shift into an elite engineering advantage:
+
+## 1. Shift From Coder to System Conductor
+
+An AI agent possesses vast knowledge but exactly zero context of your long-term goal. If you feed it vague prompts, it will return fragile, generic code. Your value is no longer measured by syntax speed; it is anchored to your architectural judgment, your ability to model state, and your absolute clarity in defining requirements. Treat the AI like a brilliant but literal junior engineer.
+
+## 2. Treat Git as Your Primary Emergency Brake
+
+In traditional development, Git is an archive. In elite vibe coding, Git is a survival mechanism. Because AI can mutate entire directories in seconds, the speed of failure matches the speed of creation.
+
+**The Golden Rule:** Never send a complex prompt to an AI agent if your working directory has uncommitted, working changes.
+
+Leverage a high-frequency micro-commit workflow (e.g. schema defined ➔ commit, API route wired ➔ commit). If a vibe goes sour or the AI enters a hallucination loop, don't try to debug it through chat. Run `git reset --hard HEAD` and try a different logical approach instantly.
+
+## 3. Establish Context Rules Separately
+
+Relying entirely on a rolling conversation window is how you end up with mixed formatting, deprecated packages, and inconsistent architecture. Take control by defining your guardrails explicitly outside of the chat via `.cursorrules`, custom system definitions, or local configuration templates. Enforce:
+
+- Strict tech stack constraints (e.g. Next.js 15 App Router, TypeScript, Prisma).
+- Rigid design methodologies (e.g. functional components, explicit try/catch blocks).
+
+## 4. Implement the Three-Step Execution Framework
+
+Before letting an agent write code, force it into a strict workflow:
+
+1. **Plan Mode:** Command the AI to map out file structural changes, state modifications, and logic flows in raw text first. Review the blueprint before giving write permissions.
+2. **Micro-Iterations:** Break massive features into tiny, testable milestones. Never ask the AI to "build the entire checkout flow" at once.
+3. **Rigid Verification:** Run the code locally, keep your developer console open to catch silent runtime errors, and ensure robust test coverage to validate the logic.
+
+## The Future Belongs to the Conductors
+
+Vibe coding isn't about cutting corners; it's about massive engineering leverage. It allows a single operator to wield the execution output of an entire development team, shifting focus away from boilerplate syntax and onto solving core business domain problems.
+
+But remember: the codebase is only ever as good as the vibes, and the vibes are dictated by the system architecture you control.
+
+**Control your environment, commit your changes, enforce your rules, and master the machine.**
+
+#SoftwareEngineering #VibeCoding #GenerativeAI #WebDevelopment #CodingWorkflow #TechInnovation
+
+---
+
+*Originally published on LinkedIn, May 2026.*
