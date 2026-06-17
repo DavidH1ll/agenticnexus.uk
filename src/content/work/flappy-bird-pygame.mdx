@@ -1,0 +1,24 @@
+---
+title: "Flappy Bird (Pygame)"
+year: "2026"
+role: "Solo project"
+summary: "A feature-complete Flappy Bird clone built in Pygame — day/night mode, three difficulty levels, persistent leaderboards, medal system, and a polished game-feel loop."
+stack: ["Python", "Pygame"]
+link: "https://github.com/DavidH1ll/flappy-bird"
+---
+
+## Context
+
+Day 94 of the 100-days bootcamp. The brief is a small game with a tight feedback loop. The interesting question isn't whether I can recreate the mechanics — it's whether I can ship the bits that make the original feel good: the timing window, the difficulty curve, the medal screen, the leaderboard you keep coming back to.
+
+## Approach
+
+Started from the bootcamp scaffold and kept going. Pygame handles the rendering and the input loop; the rest is data structures and a small state machine for menus, gameplay, game-over, and the high-score screen. The persistence layer is a flat-file JSON leaderboard — no database, no network, no dependencies beyond Pygame. Day/night mode, three difficulty presets, and the medal system are all driven from the same state.
+
+## Outcome
+
+A small, complete thing. The most useful part was finishing it: a project with a defined scope, shipped, that I can point at when I want to talk about polish, persistence, and the difference between a working program and a finished one.
+
+## Stack
+
+Python 3, Pygame, the standard library. Runs on Windows, macOS, and Linux.

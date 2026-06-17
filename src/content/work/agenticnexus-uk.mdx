@@ -1,0 +1,26 @@
+---
+title: "agenticnexus.uk"
+year: "2026"
+role: "Personal site"
+summary: "The site you're reading — built in Next.js with static export, Tailwind, and MDX. Designed to age well and stay out of the way of the work."
+stack: ["Next.js", "Tailwind", "MDX", "Cloudflare Pages"]
+link: "https://github.com/DavidH1ll/agenticnexus.uk"
+---
+
+## Context
+
+A personal site that had been a holding page for too long. I wanted somewhere to put the open-source work, the writing, and a long-form bio that doesn't have to fit on a CV — without paying for hosting, maintaining a server, or handing over my content to a platform.
+
+## Approach
+
+A static Next.js app, exported as plain HTML, deployed to Cloudflare Pages. The four routes (`/`, `/about`, `/work`, `/contact`, plus a `/credentials` page and dynamic `/work/[slug]` case studies) are generated at build time from a small data layer and a folder of MDX files. No CMS, no database, no runtime — the site is a directory of files I can edit and push.
+
+Visually, I kept the obsidian-and-cyan palette from the holding page but dialled down the terminal aesthetic. Larger type, generous whitespace, mono only where it's earned. The pulsing dot in the nav is the one persistent motif.
+
+## Outcome
+
+A portfolio I can run with a single `git push`, that loads instantly, and that I can keep adding to as the work evolves. The case-study format means I can document the 100-days project, the Neovim tooling, and anything else that comes next without restructuring the site.
+
+## Stack
+
+Next.js 14 (App Router, static export), Tailwind CSS, `next-mdx-remote`, `gray-matter`, `react-icons`. Fonts loaded via `next/font`. Contact form posts to Formspree.
