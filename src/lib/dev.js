@@ -1,13 +1,5 @@
 export const devProjects = [
   {
-    slug: 'godot-2d-experiment',
-    title: 'Godot 2D experiment',
-    status: 'In progress',
-    description:
-      'A small 2D Godot project exploring mechanics, animation, and the HTML5 export pipeline. Hosted build below — click to play.',
-    link: '/development/godot-2d-experiment/',
-  },
-  {
     slug: 'rust-learning',
     title: 'Rust learning',
     status: 'Ongoing',
@@ -16,8 +8,3 @@ export const devProjects = [
     link: null,
   },
 ]
-
-export const devNotes = {
-  location: '/mnt/storage/Development/Godot/export/',
-  description: 'Local Godot HTML5 export bundle for the 2D experiment.',
-}
