@@ -1,0 +1,10 @@
+/godot-2d-experiment/*
+  Cross-Origin-Opener-Policy: same-origin
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Resource-Policy: cross-origin
+
+/godot-2d-experiment/*.wasm
+  Content-Type: application/wasm
+
+/godot-2d-experiment/*.pck
+  Content-Type: application/octet-stream
