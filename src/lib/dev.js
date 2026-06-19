@@ -5,7 +5,7 @@ export const devProjects = [
     status: 'In progress',
     description:
       'A small 2D Godot project exploring mechanics, animation, and the HTML5 export pipeline. Hosted build below — click to play.',
-    link: '/godot-2d-experiment/',
+    link: '/development/godot-2d-experiment/',
   },
   {
     slug: 'rust-learning',
