@@ -16,9 +16,11 @@ export default function NeuralBg() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     const ACCENT = { r: 56, g: 189, b: 248 }
-    const MAX_DIST = 130
-    const MOUSE_RADIUS = 120
-    const NODE_COUNT_DIVISOR = 18000
+    const MAX_DIST = 90
+    const MOUSE_RADIUS = 110
+    const MOUSE_FORCE = 0.6
+    const NODE_TARGET = 60
+    const CENTER_BIAS = 0.012
 
     let nodes = []
     let raf = 0
@@ -28,18 +30,49 @@ export default function NeuralBg() {
     const cssWidth = () => canvas.offsetWidth
     const cssHeight = () => canvas.offsetHeight
 
+    const inBrain = (x, y, w, h) => {
+      const cx = w / 2
+      const cy = h / 2
+
+      const cerDx = (x - cx) / (w * 0.36)
+      const cerDy = (y - cy + h * 0.02) / (h * 0.22)
+      if (cerDx * cerDx + cerDy * cerDy < 1) return true
+
+      const ftDx = (x - cx) / (w * 0.18)
+      const ftDy = (y - cy + h * 0.16) / (h * 0.1)
+      if (ftDx * ftDx + ftDy * ftDy < 1) return true
+
+      const cbDx = (x - cx) / (w * 0.13)
+      const cbDy = (y - cy - h * 0.18) / (h * 0.08)
+      if (cbDx * cbDx + cbDy * cbDy < 1) return true
+
+      return false
+    }
+
     const initNodes = () => {
       const w = cssWidth()
       const h = cssHeight()
-      const count = Math.min(72, Math.floor((w * h) / NODE_COUNT_DIVISOR))
-      nodes = Array.from({ length: count }, () => ({
-        x: Math.random() * w,
-        y: Math.random() * h,
-        vx: (Math.random() - 0.5) * 0.22,
-        vy: (Math.random() - 0.5) * 0.22,
-        r: 1.2 + Math.random() * 1.6,
-        phase: Math.random() * Math.PI * 2,
-      }))
+      nodes = []
+
+      const target = Math.min(NODE_TARGET, Math.floor((w * h) / 22000))
+      let attempts = 0
+      const maxAttempts = target * 30
+
+      while (nodes.length < target && attempts < maxAttempts) {
+        attempts++
+        const x = Math.random() * w
+        const y = Math.random() * h
+        if (inBrain(x, y, w, h)) {
+          nodes.push({
+            x,
+            y,
+            vx: (Math.random() - 0.5) * 0.18,
+            vy: (Math.random() - 0.5) * 0.18,
+            r: 1.2 + Math.random() * 1.8,
+            phase: Math.random() * Math.PI * 2,
+          })
+        }
+      }
     }
 
     const resize = () => {
@@ -59,9 +92,9 @@ export default function NeuralBg() {
           const d2 = dx * dx + dy * dy
           if (d2 < MAX_DIST * MAX_DIST) {
             const d = Math.sqrt(d2)
-            const opacity = (1 - d / MAX_DIST) * 0.32
+            const opacity = (1 - d / MAX_DIST) * 0.38
             ctx.strokeStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${opacity})`
-            ctx.lineWidth = 0.6
+            ctx.lineWidth = 0.7
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
@@ -74,7 +107,7 @@ export default function NeuralBg() {
     const drawNodes = (t) => {
       for (const n of nodes) {
         const pulse = reducedMotion ? 1 : 0.7 + 0.3 * Math.sin(t * 0.0012 + n.phase)
-        ctx.fillStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${0.55 * pulse})`
+        ctx.fillStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${0.6 * pulse})`
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
         ctx.fill()
@@ -84,11 +117,18 @@ export default function NeuralBg() {
     const updateNodes = () => {
       const w = cssWidth()
       const h = cssHeight()
+      const cx = w / 2
+      const cy = h / 2
+
       for (const n of nodes) {
         n.x += n.vx
         n.y += n.vy
-        if (n.x < 0 || n.x > w) n.vx *= -1
-        if (n.y < 0 || n.y > h) n.vy *= -1
+
+        const dxc = cx - n.x
+        const dyc = cy - n.y
+        const dc = Math.sqrt(dxc * dxc + dyc * dyc) || 0.01
+        n.x += (dxc / dc) * CENTER_BIAS
+        n.y += (dyc / dc) * CENTER_BIAS
 
         if (mouse.active && !isTouch) {
           const dx = n.x - mouse.x
@@ -96,7 +136,7 @@ export default function NeuralBg() {
           const d2 = dx * dx + dy * dy
           if (d2 < MOUSE_RADIUS * MOUSE_RADIUS) {
             const d = Math.sqrt(d2) || 0.01
-            const force = ((MOUSE_RADIUS - d) / MOUSE_RADIUS) * 0.6
+            const force = ((MOUSE_RADIUS - d) / MOUSE_RADIUS) * MOUSE_FORCE
             n.x += (dx / d) * force
             n.y += (dy / d) * force
           }
