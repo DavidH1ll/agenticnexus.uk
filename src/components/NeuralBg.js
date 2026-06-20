@@ -16,10 +16,10 @@ export default function NeuralBg() {
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     const ACCENT = { r: 56, g: 189, b: 248 }
-    const MAX_DIST = 90
-    const MOUSE_RADIUS = 110
-    const MOUSE_FORCE = 0.6
-    const NODE_TARGET = 60
+    const MAX_DIST = 105
+    const MOUSE_RADIUS = 120
+    const MOUSE_FORCE = 0.7
+    const NODE_TARGET = 80
     const CENTER_BIAS = 0.012
 
     let nodes = []
@@ -54,7 +54,7 @@ export default function NeuralBg() {
       const h = cssHeight()
       nodes = []
 
-      const target = Math.min(NODE_TARGET, Math.floor((w * h) / 22000))
+      const target = Math.min(NODE_TARGET, Math.floor((w * h) / 16000))
       let attempts = 0
       const maxAttempts = target * 30
 
@@ -68,7 +68,7 @@ export default function NeuralBg() {
             y,
             vx: (Math.random() - 0.5) * 0.18,
             vy: (Math.random() - 0.5) * 0.18,
-            r: 1.2 + Math.random() * 1.8,
+            r: 2 + Math.random() * 2,
             phase: Math.random() * Math.PI * 2,
           })
         }
@@ -92,9 +92,9 @@ export default function NeuralBg() {
           const d2 = dx * dx + dy * dy
           if (d2 < MAX_DIST * MAX_DIST) {
             const d = Math.sqrt(d2)
-            const opacity = (1 - d / MAX_DIST) * 0.38
+            const opacity = (1 - d / MAX_DIST) * 0.55
             ctx.strokeStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${opacity})`
-            ctx.lineWidth = 0.7
+            ctx.lineWidth = 1
             ctx.beginPath()
             ctx.moveTo(a.x, a.y)
             ctx.lineTo(b.x, b.y)
@@ -107,7 +107,15 @@ export default function NeuralBg() {
     const drawNodes = (t) => {
       for (const n of nodes) {
         const pulse = reducedMotion ? 1 : 0.7 + 0.3 * Math.sin(t * 0.0012 + n.phase)
-        ctx.fillStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${0.6 * pulse})`
+        const alpha = 0.9 * pulse
+        const haloAlpha = 0.18 * pulse
+
+        ctx.fillStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${haloAlpha})`
+        ctx.beginPath()
+        ctx.arc(n.x, n.y, n.r * 3, 0, Math.PI * 2)
+        ctx.fill()
+
+        ctx.fillStyle = `rgba(${ACCENT.r}, ${ACCENT.g}, ${ACCENT.b}, ${alpha})`
         ctx.beginPath()
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2)
         ctx.fill()
