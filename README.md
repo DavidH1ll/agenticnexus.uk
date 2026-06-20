@@ -51,7 +51,8 @@ agenticnexus.uk/
 │   │   ├── Nav.js                     # sticky header, pulsing dot, mobile menu
 │   │   ├── Footer.js                  # location, email, socials
 │   │   ├── ContactForm.js             # @formspree/react form
-│   │   └── MdxComponents.js           # custom MDX components
+│   │   ├── MdxComponents.js           # custom MDX components
+│   │   └── NeuralBg.js                # client canvas — brain-shaped node animation on hero
 │   ├── content/
 │   │   ├── work/                      # MDX case studies
 │   │   │   ├── agenticnexus-uk.mdx
@@ -72,9 +73,7 @@ agenticnexus.uk/
 │       ├── data.js                    # profile, experience, themes, skills, credentials
 │       └── dev.js                     # dev area projects (unlisted)
 ├── public/
-│   ├── avatars/david.jpg              # GitHub avatar (~280 KB)
-│   ├── _headers                       # Cloudflare custom headers (COOP/COEP for Godot)
-│   └── godot-2d-experiment/           # Godot 4 HTML5 export (~40 MB, 9 files)
+│   └── avatars/david.jpg              # GitHub avatar (~280 KB)
 ├── next.config.js                     # withMDX wrapper + output: 'export'
 ├── tailwind.config.js
 ├── postcss.config.js
@@ -97,7 +96,6 @@ agenticnexus.uk/
 | `/credentials` | Training + selected wins | ✓ | ✓ | ✓ |
 | `/contact` | Formspree form + direct links | ✓ | ✓ | ✓ |
 | `/development` | Unlisted dev scratchpad | ❌ | ❌ | ❌ |
-| `/godot-2d-experiment/` | Godot 4 HTML5 game (linked from /development) | ❌ | ❌ | ❌ |
 | `/404` | Custom 404 | n/a | n/a | n/a |
 | `/sitemap.xml` | SEO sitemap | n/a | n/a | n/a |
 | `/robots.txt` | SEO robots | n/a | n/a | n/a |
@@ -179,7 +177,7 @@ Each `devProjects` entry shape:
 - **Palette** — defined in `src/app/globals.css` as RGB triplets (e.g. `--obsidian: 11 15 20`) so Tailwind opacity modifiers work. Token names: `obsidian`, `slate`, `slate-soft`, `border`, `text`, `muted`, `accent`, `accent-soft`, `accent-glow`, `amber`, `emerald`.
 - **Typography** — Inter (sans) for everything, JetBrains Mono (mono) for code, dates, inline metadata, and decorative `.label-mono` captions. Display scale uses `clamp()` for fluid sizing (`text-display-xl`, `text-display-lg`, `text-display-md`).
 - **Components** — `.card`, `.pill`, `.label-mono`, `.prose-mdx` (with GFM table support) defined in `globals.css` via `@layer components`.
-- **Grid bg** — subtle accent grid on the hero, masked with a radial gradient via `.grid-bg` and `.grid-bg-mask` utilities.
+- **Hero animation** — `<NeuralBg />` (`src/components/NeuralBg.js`), a client-side canvas drawing a brain-shaped constellation of nodes (cerebrum + frontal + cerebellum ellipses) with mouse-repulsion, visibility-aware RAF, and `prefers-reduced-motion` support. Replaced the old grid background.
 - **Active-link indicator** — pulsing cyan dot via `nav-link[data-active='true']::before`.
 
 ## 6. Environment variables
@@ -230,8 +228,13 @@ Chronological — commit hashes from `git log --oneline`. Last commit at the top
 
 | Commit | Summary |
 |---|---|
-| `c069309` | **Godot deploy** — 40 MB Godot 4 HTML5 export in `public/godot-2d-experiment/`, `public/_headers` for COOP/COEP, `dev.js` link set. |
-| `1ac9ee9` | **Unlisted /development dev area** — noindex, nofollow, not in nav, not in sitemap. Seeded with Godot + Rust projects. |
+| `7da8800` | **Brain animation polish** — bigger nodes, glow halos, denser network. |
+| `a127c6c` | **Brain shape** — neural network constrained to cerebrum + frontal + cerebellum ellipses via `inBrain()` mask. |
+| `74191e6` | **Neural bg** — `NeuralBg.js` client component replaces hero `.grid-bg` with an interactive canvas node animation. |
+| `7994b6a` | **Godot removed** — 35 MB `.wasm` exceeded Cloudflare's 25 MB static asset limit; bundle and `public/_headers` deleted. Will revisit via R2 or LFS. |
+| `f8e3ffb` | **Godot re-nested** — moved Godot build to `/development/godot-2d-experiment/` to match the unlisted dev area (later removed in `7994b6a`). |
+| `c069309` | **Godot deploy** — 40 MB Godot 4 HTML5 export in `public/godot-2d-experiment/`, `public/_headers` for COOP/COEP, `dev.js` link set. (Superseded by `7994b6a`.) |
+| `1ac9ee9` | **Unlisted /development dev area** — noindex, nofollow, not in nav, not in sitemap. Seeded with Godot + Rust projects. (Godot entry removed in `7994b6a`; only Rust remains.) |
 | `f463d0d` | **Mobile menu** — hamburger button for <md screens, auto-close on route change + Esc, icon morphs to X. |
 | `2400ca1` | **Meta post LinkedIn attribution removed** — "How I built…" treated as original (hashtags kept). |
 | `4ea2b20` | **Meta post** — "How I built and deployed a production-grade Next.js portfolio in 2 hours for $5.42" — about this site. |
@@ -272,8 +275,8 @@ These are decisions the user explicitly made. Don't change them without asking.
 - **Custom color opacity** — Tailwind opacity modifiers (`bg-accent/40`) require color tokens to be defined as RGB triplets, not hex. The CSS variables in `globals.css` are `11 15 20` not `#0b0f14`. If you change the palette, keep this format.
 - **GFM tables** — `next-mdx-remote` doesn't parse pipe tables by default. Both `[slug]/page.js` files (work and blog) pass `remarkGfm` via `options={{ mdxOptions: { remarkPlugins: [remarkGfm] } }}`. If you add another MDX renderer, copy this.
 - **Formspree env var timing** — `NEXT_PUBLIC_FORMSPREE_ID` is read at build time. Setting it in Cloudflare after a build won't affect that build — you need to push a new commit (or hit Retry) to bake it in.
-- **Godot headers** — `public/_headers` sets COOP/COEP for `/godot-2d-experiment/*`. Without these, Godot 4 HTML5 exports fail or run without threading/audio. The file also sets Content-Type for `.wasm` and `.pck`. Don't delete `_headers`.
-- **40 MB Godot bundle in the repo** — the GitHub repo is ~40 MB larger than it would otherwise be. Acceptable for a personal site. If it becomes a problem, move to Git LFS (target: `*.pck`, `*.wasm`).
+- **NeuralBg node budget** — `NODE_TARGET = 80` in `NeuralBg.js`, capped to `(w * h) / 16000`. Mouse-repulsion is disabled on touch devices (`hover: none`). RAF pauses on `document.hidden`. Honoured `prefers-reduced-motion` for node pulse.
+- **Dead grid-bg utilities** — `.grid-bg` and `.grid-bg-mask` are still defined in `globals.css` but no page uses them (replaced by `<NeuralBg />` in `74191e6`). Safe to delete.
 - **Development is noindex** — the `/development` page has `<meta name="robots" content="noindex, nofollow">` via the Next.js metadata API (`robots: { index: false, follow: false }` in `export const metadata`).
 - **`hiddenPaths` export in `sitemap.js`** — currently a dead export. The actual exclusion is done in the same file's `sitemap()` function. Can be cleaned up.
 - **The `experience[0].company` "Active Office" role** is the current job. Update if David changes roles.
@@ -282,7 +285,7 @@ These are decisions the user explicitly made. Don't change them without asking.
 
 - **About-page bio** — currently a draft written from the CV (3 paragraphs in `src/app/about/page.js`). User wants to edit it themselves.
 - **Case study MDX files** — drafted from public GitHub READMEs. User to edit the prose.
-- **Godot export** — currently the `2d Survivor` game. If David makes changes, he'll need to rebuild the export and copy it back over the existing `public/godot-2d-experiment/`, then commit and push.
+- **Godot export** — the 2D experiment was removed (`7994b6a`) because the 35 MB `.wasm` exceeded Cloudflare's 25 MB static asset limit. To host a Godot HTML5 build again, put it on R2 (or LFS) and link from `/development` — not in `public/`.
 - **The "Currently" block on the about page** — says "Learning Rust, Building agentic workflows, Writing on the open web". Update as these change.
 - **LinkedIn URLs** — not added to blog post frontmatter because David hasn't provided them. If he wants cross-linking, add `sourceUrl: 'https://www.linkedin.com/...'` to each post's frontmatter and render it in `src/app/blog/[slug]/page.js`.
 - **Formspree features not enabled** — reCAPTCHA (spam protection), auto-responder (sends visitor a confirmation email). Can be enabled in the Formspree dashboard without code changes.
@@ -312,18 +315,8 @@ These are decisions the user explicitly made. Don't change them without asking.
 
 1. Drop the static assets into `public/<project-slug>/`.
 2. Edit `src/lib/dev.js` and set the entry's `link` to `/<project-slug>/`.
-3. If the project needs special headers (COOP/COEP for threading, MIME type overrides), add them to `public/_headers`.
+3. If the project needs special headers (COOP/COEP for threading, MIME type overrides), recreate `public/_headers` — it was deleted along with the Godot bundle in `7994b6a`. Cloudflare Pages reads `_headers` from the project root or `public/`.
 4. Push.
-
-### Update the Godot export
-
-```bash
-rm -rf public/godot-2d-experiment/*
-cp -r /mnt/storage/Development/Godot/export/. public/godot-2d-experiment/
-git add public/godot-2d-experiment
-git commit -m "chore: update Godot 2d Survivor build"
-git push origin main
-```
 
 ### Re-deploy a build without code changes
 
